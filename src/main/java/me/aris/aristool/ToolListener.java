@@ -6,6 +6,7 @@ import org.bukkit.block.Sign;
 import org.bukkit.entity.BlockDisplay;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockBreakEvent;
@@ -26,22 +27,26 @@ public class ToolListener implements Listener {
 
     public ToolListener(ArisTool plugin) { this.plugin = plugin; }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlace(BlockPlaceEvent e) {
         ItemStack item = e.getItemInHand();
         if (item.hasItemMeta() && item.getItemMeta().getDisplayName().contains("Máy Đào Tự Động")) {
             Player p = e.getPlayer();
             Location loc = e.getBlock().getLocation();
-            BlockDisplay display = loc.getWorld().spawn(loc, BlockDisplay.class);
-            display.setBlock(Material.GLOWSTONE.createBlockData());
-            display.setTransformation(new Transformation(new Vector3f(0,0,0), new org.joml.Quaternionf(), new Vector3f(1.05f, 1.05f, 1.05f), new org.joml.Quaternionf()));
-            p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.auto_drill_spawn")));
+            
             e.getBlock().setType(Material.BIRCH_SIGN);
+            
+            BlockDisplay display = loc.getWorld().spawn(loc, BlockDisplay.class);
+            display.setBlock(Material.BEACON.createBlockData());
+            display.setTransformation(new Transformation(new Vector3f(0,0,0), new org.joml.Quaternionf(), new Vector3f(1.01f, 1.01f, 1.01f), new org.joml.Quaternionf()));
+            
+            p.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("messages.auto_drill_spawn")));
+            
             Sign sign = (Sign) e.getBlock().getState();
             sign.setLine(0, "10x17");
-            sign.setLine(1, "^^^^^^^^^");
             sign.setLine(2, "Nhập Dài x Rộng");
             sign.update();
+            
             pendingDrills.put(p.getUniqueId(), loc);
         }
     }
@@ -108,4 +113,4 @@ public class ToolListener implements Listener {
             if (t.getType() != Material.AIR && t.getType() != Material.BEDROCK) t.breakNaturally(p.getInventory().getItemInMainHand());
         }
     }
-              }
+    }
