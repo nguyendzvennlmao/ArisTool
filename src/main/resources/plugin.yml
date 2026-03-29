@@ -6,6 +6,10 @@ folia-supported: true
 author: VennLMAO
 commands:
   at:
-    description: Lenh chinh cua ArisTool
+    description: Lenh chinh cua ArisTool de quan ly dung cu va reload
     permission: aristool.admin
     usage: /at <give/reload>
+permissions:
+  aristool.admin:
+    description: Quyen han cao nhat de su dung cac lenh cua ArisTool
+    default: op
