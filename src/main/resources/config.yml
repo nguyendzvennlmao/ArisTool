@@ -1,0 +1,49 @@
+messages:
+  auto_drill_spawn: "&a&l[!] &7Da dat may dao. Nhap kich thuoc vao bien (Vi du: 10x17, 50x27):"
+  auto_drill_start: "&b&l[!] &7May dao dang khoi dong dien tich %size%..."
+  auto_drill_complete: "&6&l[!] &eQua trinh dao tu dong hoan tat!"
+  invalid_format: "&cDinh dang sai! Vui long nhap kieu 'Dai x Rong' (Max 100)."
+
+items:
+  tree_chopper:
+    name: "&d&lRiu Tree Chopper"
+    role: "&7[Role &fTho Rung&7]"
+    lore:
+      - "&7Chat toan bo cay ngay lap tuc"
+    enchants:
+      - "DIG_SPEED:5"
+  auto_drill:
+    name: "&e&lMay Dao Tu Dong"
+    role: "&7[Role &bEngineer&7]"
+    lore:
+      - "&7Dat xuong de nhap kich thuoc tuy chinh"
+      - "&7Vi du: 10x17, 50x27, 100x17"
+    enchants:
+      - "DURABILITY:10"
+  multi_tool:
+    name: "&a&lDung Cu Da Nang 3x3"
+    role: "&7[Role &aSurvivor&7]"
+    lore:
+      - "&7Tu chuyen doi: Riu/Cup/Sen"
+    enchants:
+      - "DIG_SPEED:5"
+  drill_3x3:
+    name: "&b&lMay Khoan 3x3"
+    role: "&7[Role &fMiner&7]"
+    lore:
+      - "&7Dao dien tich 3x3"
+    enchants:
+      - "DIG_SPEED:5"
+  drill_9x9:
+    name: "&6&lMay Khoan 9x9"
+    role: "&7[Role &6Master&7]"
+    lore:
+      - "&7Dao dien tich 9x9"
+    enchants:
+      - "DIG_SPEED:6"
+  firework:
+    name: "&e&lPhao Hoa Vinh Vien"
+    role: "&7[Role &dFlyer&7]"
+    lore:
+      - "&7Ho tro bay luon"
+    enchants: []
