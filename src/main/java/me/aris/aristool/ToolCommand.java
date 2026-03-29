@@ -21,9 +21,17 @@ public class ToolCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        if (!(sender instanceof Player player)) return true;
-        if (args.length == 3 && args[0].equalsIgnoreCase("give")) {
-            player.getInventory().addItem(createTool(args[1], parseTime(args[2])));
+        if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
+            if (!sender.hasPermission("aristool.admin")) return true;
+            plugin.reloadConfig();
+            sender.sendMessage(ChatColor.GREEN + "ArisTool has been reloaded!");
+            return true;
+        }
+        if (args.length == 4 && args[0].equalsIgnoreCase("give")) {
+            if (!sender.hasPermission("aristool.admin")) return true;
+            Player target = plugin.getServer().getPlayer(args[1]);
+            if (target == null) return true;
+            target.getInventory().addItem(createTool(args[2], parseTime(args[3])));
             return true;
         }
         return false;
@@ -70,4 +78,4 @@ public class ToolCommand implements CommandExecutor {
         if (s >= 60) return (s / 60) + "m";
         return s + "s";
     }
-}
+                }
