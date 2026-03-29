@@ -1,0 +1,10 @@
+name: ArisTool
+version: 1.0
+main: me.aris.aristool.ArisTool
+api-version: '1.20'
+folia-supported: true
+author: VennLMAO
+commands:
+  at:
+    description: Lenh chinh cua ArisTool
+    permission: aristool.admin
