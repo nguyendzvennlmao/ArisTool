@@ -24,7 +24,7 @@ public class ToolTabCompleter implements TabCompleter {
             return filter(Arrays.asList("tree_chopper", "auto_drill", "multi_tool", "drill_3x3", "drill_9x9", "firework"), args[2]);
         }
         if (args.length == 4 && args[0].equalsIgnoreCase("give")) {
-            return filter(Arrays.asList("60s", "30m", "1d", "7d"), args[3]);
+            return filter(Arrays.asList("60s", "30m", "1d", "vinhvien"), args[3]);
         }
         return new ArrayList<>();
     }
@@ -32,4 +32,4 @@ public class ToolTabCompleter implements TabCompleter {
     private List<String> filter(List<String> list, String input) {
         return list.stream().filter(s -> s.toLowerCase().startsWith(input.toLowerCase())).collect(Collectors.toList());
     }
-}
+            }
