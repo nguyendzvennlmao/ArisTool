@@ -13,7 +13,11 @@ public class ArisTool extends JavaPlugin {
         instance = this;
         EXPIRY_KEY = new NamespacedKey(this, "expiry_time");
         saveDefaultConfig();
-        getCommand("at").setExecutor(new ToolCommand(this));
+        
+        ToolCommand cmd = new ToolCommand(this);
+        getCommand("at").setExecutor(cmd);
+        getCommand("at").setTabCompleter(new ToolTabCompleter());
+        
         getServer().getPluginManager().registerEvents(new ToolListener(this), this);
         getServer().getGlobalRegionScheduler().runAtFixedRate(this, (task) -> {
             Bukkit.getOnlinePlayers().forEach(player -> new ExpiryManager(this).update(player));
