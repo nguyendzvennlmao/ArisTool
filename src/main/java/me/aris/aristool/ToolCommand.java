@@ -21,17 +21,24 @@ public class ToolCommand implements CommandExecutor {
 
     @Override
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+        if (!sender.hasPermission("aristool.admin")) return true;
+        
         if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
-            if (!sender.hasPermission("aristool.admin")) return true;
             plugin.reloadConfig();
             sender.sendMessage(ChatColor.GREEN + "ArisTool has been reloaded!");
             return true;
         }
-        if (args.length == 4 && args[0].equalsIgnoreCase("give")) {
-            if (!sender.hasPermission("aristool.admin")) return true;
+
+        if (args.length >= 3 && args[0].equalsIgnoreCase("give")) {
             Player target = plugin.getServer().getPlayer(args[1]);
             if (target == null) return true;
-            target.getInventory().addItem(createTool(args[2], parseTime(args[3])));
+            
+            long time = -1;
+            if (args.length == 4) {
+                time = parseTime(args[3]);
+            }
+            
+            target.getInventory().addItem(createTool(args[2], time));
             return true;
         }
         return false;
@@ -39,12 +46,13 @@ public class ToolCommand implements CommandExecutor {
 
     private long parseTime(String input) {
         try {
+            if (input.equalsIgnoreCase("vinhvien")) return -1;
             long num = Long.parseLong(input.substring(0, input.length() - 1));
             if (input.endsWith("s")) return num;
             if (input.endsWith("m")) return num * 60;
             if (input.endsWith("d")) return num * 86400;
-        } catch (Exception e) { return 60; }
-        return 60;
+        } catch (Exception e) { return -1; }
+        return -1;
     }
 
     private ItemStack createTool(String type, long seconds) {
@@ -57,12 +65,19 @@ public class ToolCommand implements CommandExecutor {
         ItemStack item = new ItemStack(mat);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(translate(plugin.getConfig().getString(path + ".name")));
-        long expiry = System.currentTimeMillis() + (seconds * 1000L);
-        meta.getPersistentDataContainer().set(ArisTool.EXPIRY_KEY, PersistentDataType.LONG, expiry);
+        
         List<String> lore = new ArrayList<>();
         lore.add(translate(plugin.getConfig().getString(path + ".role")));
         for (String s : plugin.getConfig().getStringList(path + ".lore")) lore.add(translate(s));
-        lore.add(translate("&7Dụng cụ hết hạn sau " + formatTime(seconds)));
+
+        if (seconds != -1) {
+            long expiry = System.currentTimeMillis() + (seconds * 1000L);
+            meta.getPersistentDataContainer().set(ArisTool.EXPIRY_KEY, PersistentDataType.LONG, expiry);
+            lore.add(translate("&7Dụng cụ hết hạn sau " + formatTime(seconds)));
+        } else {
+            lore.add(translate("&6&lDụng cụ Vĩnh Viễn"));
+        }
+
         meta.setLore(lore);
         for (String en : plugin.getConfig().getStringList(path + ".enchants")) {
             String[] s = en.split(":");
@@ -78,4 +93,4 @@ public class ToolCommand implements CommandExecutor {
         if (s >= 60) return (s / 60) + "m";
         return s + "s";
     }
-                }
+        }
