@@ -8,3 +8,4 @@ commands:
   at:
     description: Lenh chinh cua ArisTool
     permission: aristool.admin
+    usage: /at <give/reload>
